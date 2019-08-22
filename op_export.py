@@ -53,9 +53,9 @@ class OBJECT_OT_snappyhexmeshgui_export(bpy.types.Operator):
         blockData = export_block_mesh_replacements(blockData)
         n, snappyData = export_snappy_replacements(snappyData)
 
-        # Write surfaceFeaturesDict
+        # Write surfaceFeatureExtractDict
         outfilename = os.path.join(bpy.path.abspath(export_path), \
-                                   'system', 'surfaceFeaturesDict')
+                                   'system', 'surfaceFeatureExtractDict')
         outfile = open(outfilename, 'w')
         outfile.write(''.join(featuresData))
         outfile.close()
@@ -83,7 +83,7 @@ class OBJECT_OT_snappyhexmeshgui_export(bpy.types.Operator):
 def export_initialize(self, surface_features_template_path, \
                       block_mesh_template_path, \
                       snappy_template_path, export_path):
-    """Initialization routine. Reads contents of surfaceFeaturesDictTemplate,
+    """Initialization routine. Reads contents of surfaceFeatureExtractDictTemplate,
     blockMeshDictTemplate, and snappyHexMeshDictTempalte files as text strings
     and creates directory structure undex export path if needed.
     """
@@ -107,7 +107,7 @@ def export_initialize(self, surface_features_template_path, \
                     % block_mesh_template_path)
         return None, None, None
 
-    l.debug("surfaceFeaturesDictTemplate path: %r" % surface_features_template_path)
+    l.debug("surfaceFeatureExtractDictTemplate path: %r" % surface_features_template_path)
     if not (os.path.isfile(surface_features_template_path)):
         self.report({'ERROR'}, "Template not found: %r" \
                     % surface_features_template_path)
@@ -179,7 +179,11 @@ def export_surface_features_replacements(data):
             continue
         if not i.shmg_include_feature_extraction:
             continue
-        d += "   \"%s.stl\"\n" % i.name
+        d += "{}.stl\n".format(i.name)
+        d += "{\n"
+        d += "    includedAngle 150;\n"
+        d += "    writeObj      yes;\n"
+        d += "}\n"
 
     data = subst_value("FEATURESURFACES", d, data)
     return data

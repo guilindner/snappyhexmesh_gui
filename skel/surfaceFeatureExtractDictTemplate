@@ -8,9 +8,4 @@ FoamFile
 
 //_HEADER_//
 
-surfaces
-(
 //_FEATURESURFACES_//
-);
-
-includedAngle   150;

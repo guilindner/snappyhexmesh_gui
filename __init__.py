@@ -19,7 +19,7 @@
 # <pep8 compliant>
 
 bl_info = {
-    "name": "SnappyHexMesh GUI",
+    "name": "SnappyHexMesh GUI v1906",
     "author": "Tuomo Keskitalo",
     "blender": (2, 80, 0),
     "location": "3D View > SnappyHexMesh GUI",
@@ -67,7 +67,7 @@ class SnappyHexMeshGUI_Settings(bpy.types.PropertyGroup):
     surface_features_template_path: bpy.props.StringProperty(
         name="Surface Features Template Path",
         description="Path to surfaceFeaturesDict Template",
-        default=os.path.join(os.path.dirname(__file__), 'skel', 'surfaceFeaturesDictTemplate'),
+        default=os.path.join(os.path.dirname(__file__), 'skel', 'surfaceFeatureExtractDictTemplate'),
         maxlen=1024,
         subtype="FILE_PATH",
     )
